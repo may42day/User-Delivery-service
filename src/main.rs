@@ -16,11 +16,11 @@ async fn main() -> Result<(), anyhow::Error> {
     let grpc_server_task = tokio::spawn(grpc_server.run_untill_stopped(config.clone()));
     let courier_distributor_task = tokio::spawn(run_courier_distributor_untill_stopped(config));
 
-    // tokio::select! {
-    //     task = application_task => report_exit("Application", task),
-    //     task = grpc_server_task =>  report_exit("gRPC Server", task),
-    //     task = courier_distributor_task =>  report_exit("Courier distributor", task),
-    // };
+    tokio::select! {
+        task = application_task => report_exit("Application", task),
+        task = grpc_server_task =>  report_exit("gRPC Server", task),
+        task = courier_distributor_task =>  report_exit("Courier distributor", task),
+    };
 
     Ok(())
 }
