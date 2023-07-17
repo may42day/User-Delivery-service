@@ -1,0 +1,27 @@
+syntax="proto3";
+package orders;
+
+service Orders{
+    rpc NotifyFoundedCourier(CourierForUserRequest) returns (CourierForUserResponse);
+    rpc NotifyExpirationTime(TimeExpirationRequest) returns (TimeExpirationResponse);
+}
+
+message CourierForUserRequest {
+    string courier_uuid = 1;
+    string user_uuid = 2;
+    float courier_rating = 3;
+}
+
+message CourierForUserResponse {
+    bool order_created = 1;
+}
+
+message TimeExpirationRequest {
+    string user_uuid = 1;
+}
+
+message TimeExpirationResponse {
+    bool user_notified = 1;
+}
+
+

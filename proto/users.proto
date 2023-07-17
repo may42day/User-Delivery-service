@@ -1,0 +1,71 @@
+syntax="proto3";
+package users;
+
+service Users{
+    rpc SendTokenClaims(TokenClaimsRequest) returns (TokenClaimsResponse);
+    rpc FindCourier(FindCourierRequest) returns (FindCourierResponse);
+    rpc UpdateCourierRating(UpdateCourierRatingRequest) returns (UpdateCourierRatingResponse);
+    rpc WaitForCourier(WaitForCourierRequest) returns (WaitForCourierResponse);
+
+    // rpc CheckCouriersRaiting(CouriersRaitingRequest) returns (CouriersRaitingResponse);
+    // rpc CheckCourierRaiting(CourierRaitingRequest) returns (CourierRaitingResponse);
+}
+
+message TokenClaimsRequest {
+    string token = 1;
+}
+
+message TokenClaimsResponse {
+    string uuid = 1;
+    string role = 2;
+}
+
+message FindCourierRequest {
+    string user_uuid = 1;
+}
+
+message FindCourierResponse {
+    string courier_uuid = 1;
+    bool added_to_queue = 2;
+    int32 time_untill_next_try = 3;
+}
+
+message UpdateCourierRatingRequest{
+    string courier_uuid = 1;
+    float rating = 2;
+}
+
+message UpdateCourierRatingResponse{
+    string message = 1;
+}
+
+message WaitForCourierRequest{
+    string user_uuid = 1;
+}
+
+message WaitForCourierResponse{
+    string status = 1;
+    int32 avg_waiting_time = 2;
+}
+
+// message CouriersRaitingRequest{
+//     string page = 1;
+//     string limit = 2;
+// }
+
+// message CouriersRaitingResponse{
+//     repeated CourierObject couriers = 1;
+// }
+
+// message CourierObject {
+//     string courier_uuid = 1;
+//     int32 courier_raiting = 2; 
+// }
+
+// message CourierRaitingRequest{
+//     string courier_uuid = 1;
+// }
+
+// message CourierRaitingResponse{
+//     int32 courier_raiting = 1;
+// }

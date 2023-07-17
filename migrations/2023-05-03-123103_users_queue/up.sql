@@ -1,0 +1,14 @@
+CREATE TABLE users_queue (
+    id BIGSERIAL PRIMARY KEY,
+    user_uuid UUID NOT NULL,
+    status TEXT NOT NULL DEFAULT 'SEARCHING',
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    CONSTRAINT USERS_ROLE_CHECK
+        CHECK (status in ('SEARCHING', 'COMPLETED', 'CANCELED', 'EXPIRED'))
+);
+
+CREATE OR REPLACE TRIGGER set_timestamp_users_queue
+BEFORE UPDATE ON users_queue
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
